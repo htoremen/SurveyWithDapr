@@ -1,0 +1,1 @@
+﻿dapr run --app-id SurveyAPI --app-port 6001 --dapr-http-port 6011 --dapr-grpc-port 6111 --app-protocol https --resources-path ../dapr/components dotnet run
