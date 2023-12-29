@@ -52,7 +52,7 @@ public class AppRunService : IAppRunService
 
     public UserModel Login(string userName)
     {
-        var request = new RestRequest("/api/Users/login", Method.Post);
+        var request = new RestRequest("/Users/login", Method.Post);
         request.AddHeader("Content-Type", "application/json");
 
         var login = new LoginRequest
@@ -75,7 +75,7 @@ public class AppRunService : IAppRunService
 
     public string SurveyAssignment(ProcessSurveyRequest model, string token)
     {
-        var request = new RestRequest("/api/Survey/survey-assignment", Method.Post);
+        var request = new RestRequest("/Survey/survey-assignment", Method.Post);
         request.AddHeader("Content-Type", "application/json");
         request.AddHeader("Authorization", "Bearer " + token);
 
@@ -83,13 +83,13 @@ public class AppRunService : IAppRunService
         request.AddJsonBody(json);
         var response = _restClient.Execute(request);
 
-        var r = JsonConvert.DeserializeObject<string>(response.Content);
+        var r = JsonConvert.DeserializeObject<GenericResponse<string>>(response.Content);
         return r.ToString();
     }
 
     public string VoteTheSurvey(SurveyQuestionRequest model, string token)
     {
-        var request = new RestRequest("/api/Survey/vote-the-survey", Method.Post);
+        var request = new RestRequest("/Survey/vote-the-survey", Method.Post);
         request.AddHeader("Content-Type", "application/json");
         request.AddHeader("Authorization", "Bearer " + token);
 

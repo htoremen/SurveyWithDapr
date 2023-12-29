@@ -1,12 +1,10 @@
+using API.Controllers;
 using Dapr.Client;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Survey.Shared.Models;
 
 namespace Survey.API.Controllers
 {
-    [ApiController]
-    public class SurveyController : ControllerBase
+    public class SurveyController : ApiControllerBase
     {
         private readonly DaprClient _daprClient;
         private readonly ILogger<SurveyController> logger;
@@ -21,8 +19,8 @@ namespace Survey.API.Controllers
         [Route("survey-assignment")]
         public async Task<GenericResponse<string>> SurveyAssignment(ProcessSurveyRequest request)
         {
-            var response = await _daprClient.InvokeMethodAsync<GenericResponse<string>>(HttpMethod.Post, "SurveyService", "/Survey/survey-assignment");
-            return response;
+            await _daprClient.PublishEventAsync("pubsub", "survey-assignment", request);
+            return GenericResponse<string>.Success(request.SurveyItemId, 200);
         }
 
 
@@ -30,7 +28,7 @@ namespace Survey.API.Controllers
         [Route("vote-the-survey")]
         public async Task VoteTheSurvey(SurveyQuestionRequest request)
         {
-            var response = await _daprClient.InvokeMethodAsync<GenericResponse<string>>(HttpMethod.Post, "SurveyService", "/Survey/vote-the-survey");
+            await _daprClient.PublishEventAsync("pubsub", "vote-the-survey", request);
         }
     }
 }

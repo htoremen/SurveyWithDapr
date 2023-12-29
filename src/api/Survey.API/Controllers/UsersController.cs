@@ -1,12 +1,11 @@
-﻿using Dapr.Client;
+﻿using API.Controllers;
+using Dapr.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Survey.API.Controllers;
 
-[Route("[controller]")]
-[ApiController]
-public class UsersController : ControllerBase
+public class UsersController : ApiControllerBase
 {
     private readonly DaprClient _daprClient;
 

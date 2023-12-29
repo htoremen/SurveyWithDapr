@@ -1,9 +1,12 @@
+using Dapr;
+
 namespace Survey.Service.Controllers;
 
 [ApiController]
 public class SurveyController : ApiControllerBase
 {
     [HttpPost]
+    [Topic("pubsub", "survey-assignment")]
     [Route("survey-assignment")]
     public async Task<GenericResponse<string>> SurveyAssignment(ProcessSurveyRequest request)
     {
@@ -19,6 +22,7 @@ public class SurveyController : ApiControllerBase
     }
 
     [HttpPost]
+    [Topic("pubsub", "vote-the-survey")]
     [Route("vote-the-survey")]
     public async Task VoteTheSurvey(SurveyQuestionRequest request)
     {
