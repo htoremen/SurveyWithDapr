@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Survey.Shared\Survey.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Surveys\Command\" />
+  </ItemGroup>
+
 </Project>

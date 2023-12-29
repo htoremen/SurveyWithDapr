@@ -18,6 +18,7 @@ public class SurveyModel
 public class ProcessSurveyRequest
 {
     public string SurveyItemId { get; set; }
+    public string UserId {  set; get; }
 }
 
 public class SurveyQuestionRequest
@@ -25,5 +26,6 @@ public class SurveyQuestionRequest
     public string InstanceId { get; set; }
     public string UserSurveyId { get; set; }
     public string SurveyQuestionId { get; set; }
+    public string UserId { set; get; }
     public string Answer { get; set; }
 }

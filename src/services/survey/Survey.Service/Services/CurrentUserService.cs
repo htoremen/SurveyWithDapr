@@ -13,5 +13,6 @@ namespace Survey.Services
         }
 
         public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        public string? Token => _httpContextAccessor.HttpContext?.User?.FindFirstValue("access_token");
     }
 }

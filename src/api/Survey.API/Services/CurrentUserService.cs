@@ -1,5 +1,4 @@
-﻿using Survey.Shared.Common.Interfaces;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace Survey.API.Services
 {
@@ -13,5 +12,6 @@ namespace Survey.API.Services
         }
 
         public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        public string? Token => _httpContextAccessor.HttpContext?.User?.FindFirstValue("access_token");
     }
 }

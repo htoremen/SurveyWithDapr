@@ -5,7 +5,7 @@ using Survey.Shared.Common.Interfaces;
 
 namespace API.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ApiControllerBase : ControllerBase

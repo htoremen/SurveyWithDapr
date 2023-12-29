@@ -1,12 +1,11 @@
 ﻿using Application.Common.Interfaces;
 using MediatR;
-using Survey.Shared.Models;
 
 namespace Survey.Application.Worker;
 
 public class SurveyConfirmationCommand : IRequest<GenericResponse<SurveyConfirmationResponse>>
 {
-    public SurveyModel Model { get; set; }
+    public SurveyQuestionRequest Model { get; set; }
 }
 
 public class SurveyConfirmationCommandHandler : IRequestHandler<SurveyConfirmationCommand, GenericResponse<SurveyConfirmationResponse>>
@@ -20,7 +19,7 @@ public class SurveyConfirmationCommandHandler : IRequestHandler<SurveyConfirmati
 
     public async Task<GenericResponse<SurveyConfirmationResponse>> Handle(SurveyConfirmationCommand request, CancellationToken cancellationToken)
     {
-        var question = request.Model.SurveyQuestionRequest;
+        var question = request.Model;
 
         var surveyItem = _context.UserSurveys.FirstOrDefault(x => x.UserId == request.Model.UserId && x.InstanceId == request.Model.InstanceId);
         if (surveyItem == null)

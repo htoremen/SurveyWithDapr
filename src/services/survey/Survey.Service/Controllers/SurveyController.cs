@@ -1,21 +1,32 @@
 using Dapr;
+using Survey.Application.Worker;
 
 namespace Survey.Service.Controllers;
 
 [ApiController]
 public class SurveyController : ApiControllerBase
 {
+    private readonly ILogger<SurveyController> logger;
+
+    public SurveyController(ILogger<SurveyController> logger)
+    {
+        this.logger = logger;
+    }
+
     [HttpPost]
     [Topic("pubsub", "survey-assignment")]
     [Route("survey-assignment")]
     public async Task<GenericResponse<string>> SurveyAssignment(ProcessSurveyRequest request)
     {
         var instanceId = Guid.NewGuid().ToString();
-        await Mediator.Send(new ProcessSurveyCommand
+        logger.LogInformation($"survey-assignment : {instanceId} message from SurveyService");
+
+        await Mediator.Send(new SurveyAssignmentCommand
         {
-            ProcessSurveyRequest = request,
-            UserId = UserService.UserId,
+            Model = request,
+            UserId = request.UserId,
             InstanceId = instanceId,
+            SurveyItemId = request.SurveyItemId,
         });
 
         return GenericResponse<string>.Success(instanceId, 200);
@@ -26,10 +37,10 @@ public class SurveyController : ApiControllerBase
     [Route("vote-the-survey")]
     public async Task VoteTheSurvey(SurveyQuestionRequest request)
     {
-        await Mediator.Send(new VoteTheSurveyCommand
-        {
-            Model = request,
-            UserId = UserService.UserId,
-        });
+        
+       await Mediator.Send(new SurveyConfirmationCommand
+       {
+           Model = request,           
+       });
     }
 }

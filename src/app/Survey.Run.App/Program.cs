@@ -63,7 +63,7 @@ using (var scope = app.Services.CreateScope())
         {
             foreach (var surveyItem in surveyItems)
             {
-                var instanceId = _service.SurveyAssignment(new ProcessSurveyRequest { SurveyItemId = surveyItem.SurveyItemId }, user.Token);
+                var instanceId = _service.SurveyAssignment(new ProcessSurveyRequest { SurveyItemId = surveyItem.SurveyItemId, UserId = user.UserId }, user.Token);
             }
         }
 
@@ -75,7 +75,7 @@ using (var scope = app.Services.CreateScope())
                 var questions = _service.GetSurveyQuestions(userSurvey.SurveyItemId);
                 foreach (var question in questions)
                 {
-                    _service.VoteTheSurvey(new SurveyQuestionRequest { InstanceId = userSurvey.InstanceId, UserSurveyId = userSurvey.UserSurveyId, SurveyQuestionId = question.SurveyQuestionId, Answer = "A" }, user.Token);
+                    _service.VoteTheSurvey(new SurveyQuestionRequest { InstanceId = userSurvey.InstanceId, UserSurveyId = userSurvey.UserSurveyId, SurveyQuestionId = question.SurveyQuestionId, UserId = user.UserId, Answer = "A" }, user.Token);
                 }
             }
         }
